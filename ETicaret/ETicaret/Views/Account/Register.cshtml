@@ -1,0 +1,128 @@
+﻿@* @model ETicaret.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<h2>@ViewData["Title"]</h2>
+<form asp-action="Register" method="post">
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password">Şifre</label>
+        <div class="input-group">
+            <input asp-for="Password" class="form-control" id="Password" />
+            <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                <i class="fa fa-eye" id="passwordIcon"></i>
+            </button>
+        </div>
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+        <small id="passwordHelp" class="text-muted">
+            Şifre en az 6 karakter, bir büyük harf, bir küçük harf ve bir özel karakter içermelidir.
+        </small>
+        <ul id="passwordRules" class="text-danger" style="display: none; margin-top: 10px;">
+            <li id="lengthRule">En az 6 karakter olmalı</li>
+            <li id="uppercaseRule">Bir büyük harf içermeli</li>
+            <li id="lowercaseRule">Bir küçük harf içermeli</li>
+            <li id="specialCharRule">Bir özel karakter içermeli</li>
+        </ul>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ConfirmPassword">Sİfre Tekrarı</label>
+        <div class="input-group">
+            <input asp-for="ConfirmPassword" class="form-control" id="ConfirmPassword" />
+            <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+                <i class="fa fa-eye" id="confirmPasswordIcon"></i>
+            </button>
+        </div>
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Üye Ol</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    // Şifre Görüntüleme/Gizleme
+    function togglePasswordVisibility(buttonId, inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        togglePasswordVisibility("togglePassword", "Password", "passwordIcon");
+    });
+
+    document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+        togglePasswordVisibility("toggleConfirmPassword", "ConfirmPassword", "confirmPasswordIcon");
+    });
+
+    // Dinamik Şifre Kontrolü
+    document.getElementById("Password").addEventListener("input", function () {
+        const password = this.value;
+        const rules = {
+            lengthRule: password.length >= 6,
+            uppercaseRule: /[A-Z]/.test(password),
+            lowercaseRule: /[a-z]/.test(password),
+            specialCharRule: /[!#$%^&*(),.?":{}|<>]/.test(password)
+        };
+
+        let allValid = true;
+        for (const [ruleId, isValid] of Object.entries(rules)) {
+            const element = document.getElementById(ruleId);
+            element.style.color = isValid ? "green" : "red";
+            allValid = allValid && isValid;
+        }
+
+        document.getElementById("passwordRules").style.display = allValid ? "none" : "block";
+    });
+</script>
+ *@
+ @model ETicaret.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<h2>@ViewData["Title"]</h2>
+ <form asp-action="Register" method="post">
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="IsVendor">Satıcı mı?</label>
+        <input asp-for="IsVendor" type="checkbox" />
+    </div>
+    <div class="form-group">
+        <label for="IsManager">Müdür mü?</label>
+        <input asp-for="IsManager" type="checkbox" />
+    </div>
+    <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+</form>
+
