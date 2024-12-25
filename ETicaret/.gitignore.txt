@@ -1,0 +1,26 @@
+# Derleme dosyaları
+/bin/
+/obj/
+
+
+# Statik dosya altındaki bazı geçici klasörler
+/wwwroot/node_modules/
+/wwwroot/dist/
+
+# Geçici dosyalar
+*.log
+*.bak
+
+# Kullanıcı bazlı yapılandırma dosyaları
+.vscode/
+.idea/
+.vs/
+
+
+# Çevreye özgü dosyalar
+appsettings.Development.json
+appsettings.Production.json
+
+# .NET ile ilgili dosyalar
+project.lock.json
+project.fragment.lock.json

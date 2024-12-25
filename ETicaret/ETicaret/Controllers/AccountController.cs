@@ -7,6 +7,7 @@ using ETicaret.Models;
 
 namespace ETicaret.Controllers
 {
+    //githuba yüklendii
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
